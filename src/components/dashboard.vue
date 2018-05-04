@@ -1,13 +1,15 @@
 <template>
   <b-container fluid>
-      <div class="row">
-        <div class="col-3">&nbsp;</div>
-        <div class="col-1" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+    <div class="row">
+      <div class="col-3">&nbsp;</div>
+      <div class="col-1" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+    </div>
+    <div class="row" v-for="file in files" v-bind:key="file">
+      <div class="col-3">{{ file }}</div>
+      <div class="col-1"  v-for="title in countries" v-bind:key="file+title">
+        <div v-bind:class="getFile(title,file)" ></div>
       </div>
-      <div class="row" v-for="file in files" v-bind:key="file">
-        <div class="col-3">{{ file }}</div>
-        <div class="col-1"  v-for="title in countries" v-bind:key="file+title">{{ getFile(title,file)}}</div>
-      </div>
+    </div>
   </b-container>
 </template>
 
@@ -56,15 +58,35 @@ export default {
       }
       var country = this.data.get(title)
       var fileStatus = country.get(file)
-      if (fileStatus === undefined) {
-        return 'N/A'
+      if (fileStatus === false) {
+        return 'notReceived'
       }
-      return fileStatus
+      if (fileStatus === true) {
+        return 'received'
+      }
+      return 'base'
     }
   }
 }
 </script>
 
 <style scoped>
+  .received {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: green
+  }
+  .notReceived {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red
+  }
+  .base {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+  }
 
 </style>
