@@ -1,11 +1,12 @@
 language: node_js
 node_js:
-  - "iojs"
-  - "7"
-
+   - "node"
+cache:
+  directories:
+    - node_modules
 script:
   - npm install
-  - ng build -prod
+  - npm run build
 
 deploy:
   provider: releases
