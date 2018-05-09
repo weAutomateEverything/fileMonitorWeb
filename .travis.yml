@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "iojs"
+  - "7"
+
+script:
+  - npm install
+  - ng build -prod
+
+deploy:
+  provider: releases
+  api_key: $OAUTH_TOKEN
+  file: dist/*
+  skip_cleanup: true
+  on:
+    tags: true
