@@ -20,16 +20,16 @@ export default {
 
 <style>
   .circle {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    border-radius: 5%;
+    width: 110px;
+    height: 110px;
     background-color: green
   }
 
   .file {
-    text-align: center;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin: 3px;
     vertical-align: middle;
-    line-height: 90px;
-    margin: 5px;
   }
 </style>
