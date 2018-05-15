@@ -11,7 +11,7 @@ script:
 deploy:
   provider: releases
   api_key: $OAUTH_TOKEN
-  file: dist.zip
+  file: dist.tar.gz
   skip_cleanup: true
   on:
     branch: master

@@ -15,7 +15,7 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
-const WebpackZipPlugin = require('webpack-zip-plugin')
+let ArchivePlugin = require('webpack-archive-plugin');
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -36,10 +36,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new WebpackZipPlugin({
-      initialFile: 'dist',
-      zipName: 'dist.zip'
+
+    new ArchivePlugin({
+      format:'tar',
     }),
+
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
