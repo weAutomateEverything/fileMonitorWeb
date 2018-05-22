@@ -39,14 +39,14 @@ export default {
           for (var row in rows) {
             var rowdata = new Map()
             var parent = rows[row]
-            var c = Object.entries(parent[1])
-            var country = c[0][0]
+            var c = Object.entries(parent)
+            var country = c[0][1]
             this.countries.push(country)
-            for (var filename in c[0][1]) {
+            for (var filename in c[1][1]) {
               if (!this.files.includes(filename)) {
                 this.files.push(filename)
               }
-              rowdata.set(filename, c[0][1][filename])
+              rowdata.set(filename, c[1][1][filename])
             }
             this.data.set(country, rowdata)
           }
