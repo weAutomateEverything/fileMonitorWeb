@@ -23,8 +23,10 @@ export default {
       files: ''
     }
   },
+  timer: '',
   mounted () {
     this.fillData()
+    this.timer = setInterval(this.fillData, 50000)
   },
   methods: {
     fillData () {
@@ -51,6 +53,9 @@ export default {
             this.data.set(country, rowdata)
           }
         })
+    },
+    beforeDestroy () {
+      clearInterval(this.timer)
     },
     getFile: function (title, file) {
       if (this.data === undefined) {
