@@ -63,10 +63,16 @@ export default {
       }
       var country = this.data.get(title)
       var fileStatus = country.get(file)
-      if (fileStatus === false) {
+      if (fileStatus === 'notreceived') {
         return 'notReceived'
       }
-      if (fileStatus === true) {
+      if (fileStatus === 'late') {
+        return 'late'
+      }
+      if (fileStatus === 'unaccessable') {
+        return 'unaccessable'
+      }
+      if (fileStatus === 'received') {
         return 'received'
       }
       return 'base'
@@ -80,13 +86,25 @@ export default {
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background-color: green
+    background-color: green;
+  }
+  .late {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+  }
+  .unaccessable {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: blue;
   }
   .notReceived {
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background-color: red
+    background-color: red;
   }
   .base {
     border-radius: 50%;
