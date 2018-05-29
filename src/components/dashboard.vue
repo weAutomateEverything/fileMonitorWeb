@@ -89,7 +89,7 @@ export default {
       if (fileStatus === 'received') {
         return 'received'
       }
-      return 'base'
+      return ''
     }
   }
 }
@@ -124,11 +124,6 @@ export default {
     height: 20px;
     background-color: red;
   }
-  .base {
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-  }
   .key {
     width: 85%;
     float: top;
@@ -147,7 +142,6 @@ export default {
     border-top: solid 1px lightgrey;
   }
   .dataBar {
-    padding-left: 50px;
     padding-top: 8px;
     border-top: solid 1px lightgrey;
   }
