@@ -1,12 +1,26 @@
 <template>
   <b-container fluid>
+    <div class="key">
+      <div class="col-sm-2 keys">
+        <div class="received"></div><p>Received</p>
+      </div>
+      <div class="col-sm-2 keys">
+        <div class="late"></div><p>File arrived late</p>
+      </div>
+      <div class="col-sm-2 keys">
+        <div class="notReceived"></div><p>File not received</p>
+      </div>
+      <div class="col-sm-2 keys">
+        <div class="unaccessable"></div><p>Share unaccessable</p>
+      </div>
+    </div>
     <div class="row">
       <div class="col-3">&nbsp;</div>
-      <div class="col-1" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+      <div class="col-1 h4 locationBar" v-for="title in countries" v-bind:key="title">{{ title }}</div>
     </div>
     <div class="row" v-for="file in files" v-bind:key="file">
-      <div class="col-3">{{ file }}</div>
-      <div class="col-1"  v-for="title in countries" v-bind:key="file+title">
+      <div class="col-3 h6 fileBar">{{ file }}</div>
+      <div class="col-1 dataBar"  v-for="title in countries" v-bind:key="file+title">
         <div v-bind:class="getFile(title,file)" ></div>
       </div>
     </div>
@@ -83,24 +97,28 @@ export default {
 
 <style scoped>
   .received {
+    float: left;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: green;
   }
   .late {
+    float: left;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: yellow;
   }
   .unaccessable {
+    float: left;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: blue;
   }
   .notReceived {
+    float: left;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -110,6 +128,28 @@ export default {
     border-radius: 50%;
     width: 20px;
     height: 20px;
+  }
+  .key {
+    width: 85%;
+    float: top;
+    background-color: aliceblue;
+    border-radius: 5%;
+    margin-bottom: 10px;
+  }
+  .keys {
+    padding-top: 15px;
+    display: inline-block;
+  }
+
+  .fileBar {
+    align-content: center;
+    padding: 4px;
+    border-top: solid 1px lightgrey;
+  }
+  .dataBar {
+    padding-left: 50px;
+    padding-top: 8px;
+    border-top: solid 1px lightgrey;
   }
 
 </style>
