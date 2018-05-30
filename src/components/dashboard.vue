@@ -16,11 +16,11 @@
     </div>
     <div class="row">
       <div class="col-3">&nbsp;</div>
-      <div class="col-1 h4 locationBar" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+      <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
     </div>
-    <div class="row" v-for="file in files" v-bind:key="file">
-      <div class="col-3 h6 fileBar">{{ file }}</div>
-      <div class="col-1 dataBar"  v-for="title in countries" v-bind:key="file+title">
+    <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
+      <div class="col-3">{{ file }}</div>
+      <div class="col-1"  v-for="title in countries" v-bind:key="file+title">
         <div v-bind:class="getFile(title,file)" ></div>
       </div>
     </div>
@@ -97,28 +97,36 @@ export default {
 
 <style scoped>
   .received {
-    float: left;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: green;
   }
   .late {
-    float: left;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: yellow;
   }
   .unaccessable {
-    float: left;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: blue;
   }
   .notReceived {
-    float: left;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -132,18 +140,11 @@ export default {
     margin-bottom: 10px;
   }
   .keys {
-    padding-top: 15px;
+    padding-top: 10px;
     display: inline-block;
   }
-
-  .fileBar {
-    align-content: center;
-    padding: 4px;
-    border-top: solid 1px lightgrey;
-  }
-  .dataBar {
-    padding-top: 8px;
-    border-top: solid 1px lightgrey;
+  .zebraStripe {
+    background-color: lightgrey;
   }
 
 </style>
