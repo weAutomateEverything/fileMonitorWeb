@@ -135,7 +135,6 @@ export default {
   .key {
     width: 85%;
     float: top;
-    background-color: aliceblue;
     border-radius: 5%;
     margin-bottom: 10px;
   }
@@ -144,7 +143,7 @@ export default {
     display: inline-block;
   }
   .zebraStripe {
-    background-color: lightgrey;
+    background-color: #201010;
   }
 
 </style>
