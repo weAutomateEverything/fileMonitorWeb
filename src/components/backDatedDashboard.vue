@@ -1,40 +1,33 @@
 <template>
   <b-container fluid>
-      <NotificationKey></NotificationKey>
+    <date-selector></date-selector>
     <div class="row">
       <div class="col-3">&nbsp;</div>
       <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
     </div>
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
       <div class="col-3">{{ file }}</div>
-      <div class="col-1"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="notificationStyle(title,file)" ></div>
+      <div class="col-1" v-for="title in countries" v-bind:key="file+title">
+        <div v-bind:class="getFile(title,file)"></div>
       </div>
     </div>
   </b-container>
 </template>
 
 <script>
-import DateSelector from './dateSelector'
-import NotificationKey from './notificationKey'
 export default {
-  name: 'dashboard',
-  components: {NotificationKey, DateSelector},
+  name: 'backDatedDashboard',
   data () {
     return {
       data: new Map(),
       countries: '',
-      files: ''
+      files: '',
+      date: ''
     }
-  },
-  timer: '',
-  mounted () {
-    this.fillData()
-    this.timer = setInterval(this.fillData, 50000)
   },
   methods: {
     fillData () {
-      this.$http.get(process.env.ENDPOINT)
+      axios.get(process.env.ENDPOINT)
         .then(response => {
           return response.json()
         }).then(response => {
@@ -58,10 +51,7 @@ export default {
           }
         })
     },
-    beforeDestroy () {
-      clearInterval(this.timer)
-    },
-    notificationStyle: function (title, file) {
+    getFile: function (title, file) {
       if (this.data === undefined) {
         return ''
       }
@@ -84,46 +74,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .received {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: green;
-  }
-  .late {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: yellow;
-  }
-  .unaccessable {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: blue;
-  }
-  .notReceived {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background-color: red;
-  }
-  .zebraStripe {
-    background-color: #201010;
-  }
-
-</style>
