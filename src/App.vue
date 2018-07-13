@@ -1,10 +1,13 @@
 <template>
   <div id="app">
+    <router-link to="/">Home</router-link>
+    <router-link to="/backdated">Backdated</router-link>
     <router-view/>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'App'
 }

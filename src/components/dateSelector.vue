@@ -2,7 +2,6 @@
   <div class="dateSelectorBox">
     <datepicker placeholder="Select Previous Date"></datepicker>
   </div>
-
 </template>
 
 <script>

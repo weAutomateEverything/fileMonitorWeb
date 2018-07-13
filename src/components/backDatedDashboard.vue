@@ -15,8 +15,10 @@
 </template>
 
 <script>
+import DateSelector from './dateSelector'
 export default {
   name: 'backDatedDashboard',
+  components: {DateSelector},
   data () {
     return {
       data: new Map(),
@@ -27,7 +29,7 @@ export default {
   },
   methods: {
     fillData () {
-      axios.get(process.env.ENDPOINT)
+      this.$http.get(process.env.ENDPOINT)
         .then(response => {
           return response.json()
         }).then(response => {
