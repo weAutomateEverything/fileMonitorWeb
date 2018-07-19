@@ -110,7 +110,6 @@ export default {
   }
   .dateSelectorBox {
     background: black;
-    border-radius: 5%;
     width: 214px;
     padding: 20px;
     color: black;

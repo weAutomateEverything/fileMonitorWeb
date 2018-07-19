@@ -7,24 +7,7 @@
 <script>
 
 export default {
-  name: 'App',
-  data () {
-    return {
-      homeNavActive: '',
-      backdatedNavActive: ''
-    }
-  },
-  watch: {
-    '$route' () {
-      if (this.$route === '/') {
-        this.homeNavActive =
-        this.backdatedNavActive = false
-      } else if (this.$route === '/backdated') {
-        this.homeNavActive = false
-        this.backdatedNavActive = true
-      }
-    }
-  }
+  name: 'App'
 }
 </script>
 
