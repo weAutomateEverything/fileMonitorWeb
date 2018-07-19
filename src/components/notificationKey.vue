@@ -1,18 +1,39 @@
 <template>
-  <div class="key">
-    <div class="col-sm-2 keys">
-      <div class="received"></div><p>Received</p>
-    </div>
-    <div class="col-sm-2 keys">
-      <div class="late"></div><p>File arrived late</p>
-    </div>
-    <div class="col-sm-2 keys">
-      <div class="notReceived"></div><p>File not received</p>
-    </div>
-    <div class="col-sm-2 keys">
-      <div class="unaccessable"></div><p>Share unaccessable</p>
-    </div>
-  </div>
+  <b-navbar toggleable="md" type="dark" variant="Info">
+
+    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+    <b-navbar-brand href="#">F.A.R.T</b-navbar-brand>
+
+    <b-collapse is-nav id="nav_collapse">
+
+      <b-navbar-nav>
+        <b-nav-item>
+        <router-link to="/">Home</router-link>
+        </b-nav-item>
+        <b-nav-item>
+        <router-link to="/backdated">Backdated</router-link>
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-md-auto">
+        <div class="col-sm-2 keys">
+          <div class="received"></div><p>Received</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="late"></div><p>File arrived late</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="notReceived"></div><p>File not received</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="unaccessable"></div><p>Share inaccessable</p>
+        </div>
+      </b-navbar-nav>
+
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
@@ -22,17 +43,6 @@ export default {
 </script>
 
 <style scoped>
-  .key {
-    width: 85%;
-    float: top;
-    border-radius: 5%;
-    margin-bottom: 10px;
-  }
-  .keys {
-    padding-top: 10px;
-    padding-left: 10px;
-    display: inline-block;
-  }
   .received {
     margin-left:auto;
     margin-right:auto;

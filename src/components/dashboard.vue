@@ -15,11 +15,10 @@
 </template>
 
 <script>
-import DateSelector from './dateSelector'
 import NotificationKey from './notificationKey'
 export default {
   name: 'dashboard',
-  components: {NotificationKey, DateSelector},
+  components: {NotificationKey},
   data () {
     return {
       data: new Map(),

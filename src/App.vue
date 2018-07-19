@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <router-link to="/">Home</router-link>
-    <router-link to="/backdated">Backdated</router-link>
     <router-view/>
   </div>
 </template>
@@ -9,7 +7,24 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      homeNavActive: '',
+      backdatedNavActive: ''
+    }
+  },
+  watch: {
+    '$route' () {
+      if (this.$route === '/') {
+        this.homeNavActive =
+        this.backdatedNavActive = false
+      } else if (this.$route === '/backdated') {
+        this.homeNavActive = false
+        this.backdatedNavActive = true
+      }
+    }
+  }
 }
 </script>
 
@@ -21,6 +36,7 @@ export default {
   text-align: center;
   margin-top: 60px;
 }
+
 body {
   background-color: black !important;
   color: white !important;
