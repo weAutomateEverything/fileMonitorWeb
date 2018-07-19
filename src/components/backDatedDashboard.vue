@@ -8,7 +8,7 @@
       <p class="statusResponse" v-bind:key="result">{{result}}</p>
     </div>
     <div class="row">
-      <!--<div class="col-2">&nbsp;</div>-->
+      <div class="col-2">&nbsp;</div>
       <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
     </div>
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">

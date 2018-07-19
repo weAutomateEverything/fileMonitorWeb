@@ -83,6 +83,6 @@ export default {
     background-color: red;
   }
   #nav{
-    background-color: #201010;
+    width: 70%;
   }
 </style>
