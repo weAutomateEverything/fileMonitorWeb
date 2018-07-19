@@ -1,19 +1,6 @@
 <template>
   <b-container fluid>
-    <div class="key">
-      <div class="col-sm-2 keys">
-        <div class="received"></div><p>Received</p>
-      </div>
-      <div class="col-sm-2 keys">
-        <div class="late"></div><p>File arrived late</p>
-      </div>
-      <div class="col-sm-2 keys">
-        <div class="notReceived"></div><p>File not received</p>
-      </div>
-      <div class="col-sm-2 keys">
-        <div class="unaccessable"></div><p>Share unaccessable</p>
-      </div>
-    </div>
+      <NotificationKey></NotificationKey>
     <div class="row">
       <div class="col-2">&nbsp;</div>
       <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
@@ -21,15 +8,17 @@
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
       <div class="col-2 fileFontSize">{{ file }}</div>
       <div class="col-1"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="getFile(title,file)" ></div>
+        <div v-bind:class="notificationStyle(title,file)" ></div>
       </div>
     </div>
   </b-container>
 </template>
 
 <script>
+import NotificationKey from './notificationKey'
 export default {
   name: 'dashboard',
+  components: {NotificationKey},
   data () {
     return {
       data: new Map(),
@@ -71,7 +60,7 @@ export default {
     beforeDestroy () {
       clearInterval(this.timer)
     },
-    getFile: function (title, file) {
+    notificationStyle: function (title, file) {
       if (this.data === undefined) {
         return ''
       }
@@ -131,16 +120,6 @@ export default {
     width: 20px;
     height: 20px;
     background-color: red;
-  }
-  .key {
-    width: 85%;
-    float: top;
-    border-radius: 5%;
-    margin-bottom: 10px;
-  }
-  .keys {
-    padding-top: 10px;
-    display: inline-block;
   }
   .zebraStripe {
     background-color: #201010;

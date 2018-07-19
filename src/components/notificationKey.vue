@@ -1,0 +1,88 @@
+<template>
+  <b-navbar id="nav" toggleable="md" type="dark" variant="Info">
+
+    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+    <b-navbar-brand href="#">F.A.R.T</b-navbar-brand>
+
+    <b-collapse is-nav id="nav_collapse">
+
+      <b-navbar-nav>
+        <b-nav-item>
+        <router-link to="/">Home</router-link>
+        </b-nav-item>
+        <b-nav-item>
+        <router-link to="/backdated">Backdated</router-link>
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-md-auto">
+        <div class="col-sm-2 keys">
+          <div class="received"></div><p>Received</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="late"></div><p>Received Late</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="notReceived"></div><p>Not Received</p>
+        </div>
+        <div class="col-sm-2 keys">
+          <div class="unaccessable"></div><p>Share Inaccessable</p>
+        </div>
+      </b-navbar-nav>
+
+    </b-collapse>
+  </b-navbar>
+</template>
+
+<script>
+export default {
+  name: 'notificationKey'
+}
+</script>
+
+<style scoped>
+  .keys{
+    padding-top:10px;
+  }
+  .received {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: green;
+  }
+  .late {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+  }
+  .unaccessable {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: blue;
+  }
+  .notReceived {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+  }
+  #nav{
+    background-color: #201010;
+  }
+</style>

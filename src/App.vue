@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App'
 }
@@ -18,6 +19,7 @@ export default {
   text-align: center;
   margin-top: 60px;
 }
+
 body {
   background-color: black !important;
   color: white !important;
