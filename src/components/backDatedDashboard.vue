@@ -7,7 +7,6 @@
       <hr>
       <p class="statusResponse" v-bind:key="result">{{result}}</p>
     </div>
-    <h1>{{date}}</h1>
     <div class="row">
       <!--<div class="col-2">&nbsp;</div>-->
       <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
