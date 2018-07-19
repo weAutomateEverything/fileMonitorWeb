@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="Info">
+  <b-navbar id="nav" toggleable="md" type="dark" variant="Info">
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -22,13 +22,13 @@
           <div class="received"></div><p>Received</p>
         </div>
         <div class="col-sm-2 keys">
-          <div class="late"></div><p>File arrived late</p>
+          <div class="late"></div><p>Received Late</p>
         </div>
         <div class="col-sm-2 keys">
-          <div class="notReceived"></div><p>File not received</p>
+          <div class="notReceived"></div><p>Not Received</p>
         </div>
         <div class="col-sm-2 keys">
-          <div class="unaccessable"></div><p>Share inaccessable</p>
+          <div class="unaccessable"></div><p>Share Inaccessable</p>
         </div>
       </b-navbar-nav>
 
@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+  .keys{
+    padding-top:10px;
+  }
   .received {
     margin-left:auto;
     margin-right:auto;
@@ -78,5 +81,8 @@ export default {
     width: 20px;
     height: 20px;
     background-color: red;
+  }
+  #nav{
+    background-color: #201010;
   }
 </style>
