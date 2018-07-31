@@ -129,7 +129,7 @@ export default {
     padding: 2px;
   }
   .nameCol {
-    width: 20%;
+    width: 15%;
   }
   .valueCol {
     width: 7%;
