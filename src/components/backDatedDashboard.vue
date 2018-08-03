@@ -14,7 +14,7 @@
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
       <div class="nameCol fileFontSize">{{ file }}</div>
       <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="notificationStyle(title,file)" ></div>
+        <div v-bind:class="getFile(title,file)" ></div>
       </div>
     </div>
   </b-container>
