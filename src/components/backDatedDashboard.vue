@@ -8,13 +8,13 @@
       <p class="statusResponse" v-bind:key="result">{{result}}</p>
     </div>
     <div class="row">
-      <div class="col-2">&nbsp;</div>
-      <div class="col-1 h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+      <div class="nameCol">&nbsp;</div>
+      <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
     </div>
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
-      <div class="col-2 fileFontSize">{{ file }}</div>
-      <div class="col-1" v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="getFile(title,file)"></div>
+      <div class="nameCol fileFontSize">{{ file }}</div>
+      <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
+        <div v-bind:class="notificationStyle(title,file)" ></div>
       </div>
     </div>
   </b-container>
@@ -155,5 +155,11 @@ export default {
   .fileFontSize {
     font-size: small;
     padding: 2px;
+  }
+  .nameCol {
+    width: 15%;
+  }
+  .valueCol {
+    width: 7%;
   }
 </style>
