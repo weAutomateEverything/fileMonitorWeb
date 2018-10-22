@@ -13,36 +13,37 @@
     </div>
     <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
       <div class="nameCol fileFontSize">{{ file }}</div>
-      <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="getFile(title,file)" ></div>
+      <div class="valueCol" v-for="title in countries" v-bind:key="file+title">
+        <div v-bind:class="getFile(title,file)"></div>
       </div>
     </div>
   </b-container>
 </template>
 
 <script>
-  import NotificationKey from './notificationKey'
-  import Datepicker from 'vuejs-datepicker/dist/vuejs-datepicker.esm.js'
-  import moment from 'moment/moment'
-  export default {
-    name: 'backDatedDashboard',
-    components: {Datepicker, moment, NotificationKey},
-    data () {
-      return {
-        data: '',
-        countries: '',
-        files: '',
-        date: '',
-        format: 'dd/MM/yyyy',
-      }
-    },
-    methods: {
-      requestBackdated () {
-        var dateString = moment(this.date).format('DDMMYYYY')
-        this.$http.get(this.backdated + dateString)
-          .then(response => {
-            return response.json()
-          }).then(response => {
+import NotificationKey from './notificationKey'
+import Datepicker from 'vuejs-datepicker/dist/vuejs-datepicker.esm.js'
+import moment from 'moment/moment'
+
+export default {
+  name: 'backDatedDashboard',
+  components: {Datepicker, moment, NotificationKey},
+  data () {
+    return {
+      data: '',
+      countries: '',
+      files: '',
+      date: '',
+      format: 'dd/MM/yyyy'
+    }
+  },
+  methods: {
+    requestBackdated () {
+      var dateString = moment(this.date).format('DDMMYYYY')
+      this.$http.get(this.backdated + dateString)
+        .then(response => {
+          return response.json()
+        }).then(response => {
           if (response == null) {
             this.result = 'No data found for this date'
             this.data = new Map()
@@ -70,29 +71,29 @@
             }
           }
         })
-      },
-      getFile: function (title, file) {
-        if (this.data === undefined) {
-          return ''
-        }
-        var country = this.data.get(title)
-        var fileStatus = country.get(file)
-        if (fileStatus === 'notreceived') {
-          return 'notReceived'
-        }
-        if (fileStatus === 'late') {
-          return 'late'
-        }
-        if (fileStatus === 'unaccessable') {
-          return 'unaccessable'
-        }
-        if (fileStatus === 'received') {
-          return 'received'
-        }
+    },
+    getFile: function (title, file) {
+      if (this.data === undefined) {
         return ''
       }
+      var country = this.data.get(title)
+      var fileStatus = country.get(file)
+      if (fileStatus === 'notreceived') {
+        return 'notReceived'
+      }
+      if (fileStatus === 'late') {
+        return 'late'
+      }
+      if (fileStatus === 'unaccessable') {
+        return 'unaccessable'
+      }
+      if (fileStatus === 'received') {
+        return 'received'
+      }
+      return ''
     }
   }
+}
 </script>
 
 <style>
@@ -103,62 +104,72 @@
     border: 1px solid #ccc;
     width: 100%;
   }
+
   .statusResponse {
     font-size: 100%;
     color: white;
   }
+
   .dateSelectorBox {
     background: black;
     width: 214px;
     padding: 20px;
     color: black;
   }
+
   .received {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: green;
   }
+
   .late {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: yellow;
   }
+
   .unaccessable {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: blue;
   }
+
   .notReceived {
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     background-color: red;
   }
+
   .zebraStripe {
     background-color: #201010;
   }
+
   .fileFontSize {
     font-size: small;
     padding: 2px;
   }
+
   .nameCol {
     width: 15%;
   }
+
   .valueCol {
     width: 7%;
   }
