@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-<NotificationKey></NotificationKey>
+    <NotificationKey></NotificationKey>
     <div class="dateSelectorBox">
       <datepicker v-model="date" :format="format" placeholder="Select Date"></datepicker>
       <button class="small" @click="this.requestBackdated">Fetch</button>
@@ -21,28 +21,28 @@
 </template>
 
 <script>
-import NotificationKey from './notificationKey'
-import Datepicker from 'vuejs-datepicker/dist/vuejs-datepicker.esm.js'
-import moment from 'moment/moment'
-export default {
-  name: 'backDatedDashboard',
-  components: {Datepicker, moment, NotificationKey},
-  data () {
-    return {
-      data: '',
-      countries: '',
-      files: '',
-      date: '',
-      format: 'dd/MM/yyyy'
-    }
-  },
-  methods: {
-    requestBackdated () {
-      var dateString = moment(this.date).format('DDMMYYYY')
-      this.$http.get(process.env.BACKDATED + dateString)
-        .then(response => {
-          return response.json()
-        }).then(response => {
+  import NotificationKey from './notificationKey'
+  import Datepicker from 'vuejs-datepicker/dist/vuejs-datepicker.esm.js'
+  import moment from 'moment/moment'
+  export default {
+    name: 'backDatedDashboard',
+    components: {Datepicker, moment, NotificationKey},
+    data () {
+      return {
+        data: '',
+        countries: '',
+        files: '',
+        date: '',
+        format: 'dd/MM/yyyy',
+      }
+    },
+    methods: {
+      requestBackdated () {
+        var dateString = moment(this.date).format('DDMMYYYY')
+        this.$http.get(this.backdated + dateString)
+          .then(response => {
+            return response.json()
+          }).then(response => {
           if (response == null) {
             this.result = 'No data found for this date'
             this.data = new Map()
@@ -70,29 +70,29 @@ export default {
             }
           }
         })
-    },
-    getFile: function (title, file) {
-      if (this.data === undefined) {
+      },
+      getFile: function (title, file) {
+        if (this.data === undefined) {
+          return ''
+        }
+        var country = this.data.get(title)
+        var fileStatus = country.get(file)
+        if (fileStatus === 'notreceived') {
+          return 'notReceived'
+        }
+        if (fileStatus === 'late') {
+          return 'late'
+        }
+        if (fileStatus === 'unaccessable') {
+          return 'unaccessable'
+        }
+        if (fileStatus === 'received') {
+          return 'received'
+        }
         return ''
       }
-      var country = this.data.get(title)
-      var fileStatus = country.get(file)
-      if (fileStatus === 'notreceived') {
-        return 'notReceived'
-      }
-      if (fileStatus === 'late') {
-        return 'late'
-      }
-      if (fileStatus === 'unaccessable') {
-        return 'unaccessable'
-      }
-      if (fileStatus === 'received') {
-        return 'received'
-      }
-      return ''
     }
   }
-}
 </script>
 
 <style>
