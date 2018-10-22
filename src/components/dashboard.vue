@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-      <NotificationKey></NotificationKey>
+    <NotificationKey></NotificationKey>
     <div class="row">
       <div class="nameCol">&nbsp;</div>
       <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
@@ -15,28 +15,31 @@
 </template>
 
 <script>
-import NotificationKey from './notificationKey'
-export default {
-  name: 'dashboard',
-  components: {NotificationKey},
-  data () {
-    return {
-      data: new Map(),
-      countries: '',
-      files: ''
-    }
-  },
-  timer: '',
-  mounted () {
-    this.fillData()
-    this.timer = setInterval(this.fillData, 50000)
-  },
-  methods: {
-    fillData () {
-      this.$http.get(process.env.ENDPOINT)
-        .then(response => {
-          return response.json()
-        }).then(response => {
+  import NotificationKey from './notificationKey'
+  export default {
+    name: 'dashboard',
+    components: {NotificationKey},
+    data () {
+      return {
+        data: new Map(),
+        countries: '',
+        files: '',
+        endpoint: '',
+        backdated: ''
+      }
+    },
+    timer: '',
+    mounted () {
+      this.setEndpoint()
+      this.fillData()
+      this.timer = setInterval(this.fillData, 50000)
+    },
+    methods: {
+      fillData () {
+        this.$http.get(this.endpoint)
+          .then(response => {
+            return response.json()
+          }).then(response => {
           this.data = new Map()
           this.countries = []
           this.files = []
@@ -56,32 +59,47 @@ export default {
             this.data.set(country, rowdata)
           }
         })
-    },
-    beforeDestroy () {
-      clearInterval(this.timer)
-    },
-    notificationStyle: function (title, file) {
-      if (this.data === undefined) {
+      },
+      setEndpoint () {
+        if (window.location.hostname === 'armonitor.cloudy.standardbank.co.za') {
+          this.endpoint = 'http://armonitor.cloudy.standardbank.co.za:8002/fileStatus'
+          this.backdated = 'http://armonitor.cloudy.standardbank.co.za:8002/backdated?date='
+        } else if (window.location.hostname === 'armonitordev.cloudy.standardbank.co.za') {
+          this.endpoint = 'http://armonitordev.cloudy.standardbank.co.za:8002/fileStatus'
+          this.backdated = 'http://armonitordev.cloudy.standardbank.co.za:8002/backdated?date='
+        } else if (window.location.hostname === 'ribssmonitor.cloudy.standardbank.co.za') {
+          this.endpoint = 'http://ribssmonitor.cloudy.standardbank.co.za:8002/fileStatus'
+          this.backdated = 'http://ribssmonitor.cloudy.standardbank.co.za:8002/backdated?date='
+        } else {
+          this.endpoint = 'http://localhost:8002/fileStatus'
+          this.backdated = 'http://localost:8002/backdated?date='
+        }
+      },
+      beforeDestroy () {
+        clearInterval(this.timer)
+      },
+      notificationStyle: function (title, file) {
+        if (this.data === undefined) {
+          return ''
+        }
+        var country = this.data.get(title)
+        var fileStatus = country.get(file)
+        if (fileStatus === 'notreceived') {
+          return 'notReceived'
+        }
+        if (fileStatus === 'late') {
+          return 'late'
+        }
+        if (fileStatus === 'unaccessable') {
+          return 'unaccessable'
+        }
+        if (fileStatus === 'received') {
+          return 'received'
+        }
         return ''
       }
-      var country = this.data.get(title)
-      var fileStatus = country.get(file)
-      if (fileStatus === 'notreceived') {
-        return 'notReceived'
-      }
-      if (fileStatus === 'late') {
-        return 'late'
-      }
-      if (fileStatus === 'unaccessable') {
-        return 'unaccessable'
-      }
-      if (fileStatus === 'received') {
-        return 'received'
-      }
-      return ''
     }
   }
-}
 </script>
 
 <style scoped>
