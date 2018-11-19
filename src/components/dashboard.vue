@@ -42,18 +42,18 @@ export default {
           this.data = new Map()
           this.countries = []
           this.files = []
-          var rows = Object.entries(response)
-          for (var row in rows) {
+          var rows = Object.entries(response.locations) // 'rows' is an array of the index numbers and the properties of each location in response
+          for (var row in rows) { // for each index number of each location item
             var rowdata = new Map()
-            var parent = rows[row]
-            var c = Object.entries(parent)
-            var country = c[0][1]
+            var parent = rows[row] // 'rows' array item at index of 'row'
+            var c = Object.entries(parent) // 'c' is set to all properties of current location element in loop
+            var country = c[1][1].locationname
             this.countries.push(country)
-            for (var filename in c[1][1]) {
+            for (var filename in c[1][1].files) {
               if (!this.files.includes(filename)) {
                 this.files.push(filename)
               }
-              rowdata.set(filename, c[1][1][filename])
+              rowdata.set(filename, c[1][1].files[filename])
             }
             this.data.set(country, rowdata)
           }
