@@ -48,14 +48,17 @@ export default {
             var parent = rows[row] // 'rows' array item at index of 'row'
             var c = Object.entries(parent) // 'c' is set to all properties of current location element in loop
             var country = c[1][1].locationname
-            this.countries.push(country)
-            for (var filename in c[1][1].files) {
-              if (!this.files.includes(filename)) {
-                this.files.push(filename)
+            var tab = c[1][1].tab
+            if (tab === '1') {
+              this.countries.push(country)
+              for (var filename in c[1][1].files) {
+                if (!this.files.includes(filename)) {
+                  this.files.push(filename)
+                }
+                rowdata.set(filename, c[1][1].files[filename])
               }
-              rowdata.set(filename, c[1][1].files[filename])
+              this.data.set(country, rowdata)
             }
-            this.data.set(country, rowdata)
           }
         })
     },
