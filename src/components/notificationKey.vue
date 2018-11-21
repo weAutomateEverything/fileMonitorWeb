@@ -9,7 +9,10 @@
 
       <b-navbar-nav>
         <b-nav-item>
-        <router-link to="/">Home</router-link>
+        <router-link to="/">Tab1</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/secondTab">Tab2</router-link>
         </b-nav-item>
         <b-nav-item>
         <router-link to="/backdated">Backdated</router-link>
