@@ -8,10 +8,14 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(BootstrapVue)
+Vue.use(Vuetify)
 
 /* eslint-disable no-new */
 new Vue({
