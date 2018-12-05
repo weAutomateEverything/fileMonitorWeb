@@ -1,41 +1,133 @@
 <template>
-  <b-container fluid>
+  <v-app id="inspire" dark>
+    <v-navigation-drawer
+      v-model="drawer"
+      clipped
+      fixed
+      app
+    >
+      <v-list dense>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/">Tab1</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/secondTab">Tab2</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/backdated">Backdated</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>settings</v-icon>
+          </v-list-tile-action>
+          <router-link to="">Admin Console</router-link>
+        </v-list-tile>
+        <br>
+        <div class="selectorBox">
+          <v-flex xs12>
+            <v-select
+              :items=this.tabs
+              label="Select tab number"
+              v-model="tabnumber"
+            ></v-select>
+          </v-flex>
+          <v-flex xs12>
+            <v-menu
+              ref="menu"
+              :close-on-content-click="true"
+              v-model="menu"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            ><v-text-field
+              slot="activator"
+              v-model="dateFormatted"
+              label= "Date"
+              hint="Click to select date"
+              persistent-hint
+              prepend-icon="event"
+              @blur="date = parseDate(dateFormatted)"
+            ></v-text-field>
+              <v-date-picker :reactive="true" v-model="date" no-title @input="menu = true"></v-date-picker>
+            </v-menu>
+          </v-flex>
+          <hr>
+          <v-flex xs12>
+            <button @click="this.requestBackdated">Fetch</button>
+          </v-flex>
+          <hr>
+          <p class="statusResponse" v-bind:key="result">{{result}}</p>
+        </div>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>F.A.R.M</v-toolbar-title>
+    </v-toolbar>
     <NotificationKey></NotificationKey>
-    <div class="dateSelectorBox">
-      <datepicker v-model="date" :format="format" placeholder="Select Date"></datepicker>
-      <button class="small" @click="this.requestBackdated">Fetch</button>
-      <hr>
-      <p class="statusResponse" v-bind:key="result">{{result}}</p>
-    </div>
-    <div class="row">
-      <div class="nameCol">&nbsp;</div>
-      <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
-    </div>
-    <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
-      <div class="nameCol fileFontSize">{{ file }}</div>
-      <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="getFile(title,file)" ></div>
-      </div>
-    </div>
-  </b-container>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout justify-center align-center>
+          <b-container fluid>
+            <div class="row">
+              <div class="nameCol">&nbsp;</div>
+              <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+            </div>
+            <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
+              <div class="nameCol fileFontSize">{{ file }}</div>
+              <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
+                <div v-bind:class="notificationStyle(title,file)" ></div>
+              </div>
+            </div>
+          </b-container>
+        </v-layout>
+      </v-container>
+    </v-content>
+    <v-footer app fixed>
+      <span>Card Systems team</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
 import NotificationKey from './notificationKey'
-import Datepicker from 'vuejs-datepicker/dist/vuejs-datepicker.esm.js'
 import moment from 'moment/moment'
 export default {
   name: 'backDatedDashboard',
-  components: {Datepicker, moment, NotificationKey},
+  components: {moment, NotificationKey},
   data () {
     return {
-      data: '',
-      countries: '',
-      files: '',
-      date: '',
+      data: new Map(),
+      countries: [],
+      files: [],
       format: 'dd/MM/yyyy',
       result: '',
-      backdated: ''
+      backdated: '',
+      tabnumber: '1',
+      drawer: null,
+      tabs: ['1', '2'],
+      date: new Date().toISOString().substr(0, 10)
+    }
+  },
+  computed: {
+    computedDateFormatted () {
+      return this.formatDate(this.date)
+    }
+  },
+  watch: {
+    date (val) {
+      this.dateFormatted = this.formatDate(this.date)
     }
   },
   mounted () {
@@ -50,11 +142,7 @@ export default {
         }).then(response => {
           if (response == null) {
             this.result = 'No data found for this date'
-            this.data = new Map()
-            this.countries = []
-            this.files = []
           } else {
-            this.data = new Map()
             this.countries = []
             this.files = []
             var rows = Object.entries(response.locations) // 'rows' is an array of the index numbers and the properties of each location in response
@@ -63,14 +151,17 @@ export default {
               var parent = rows[row] // 'rows' array item at index of 'row'
               var c = Object.entries(parent) // 'c' is set to all properties of current location element in loop
               var country = c[1][1].locationname
-              this.countries.push(country)
-              for (var filename in c[1][1].files) {
-                if (!this.files.includes(filename)) {
-                  this.files.push(filename)
+              var tab = c[1][1].tab
+              if (tab === this.tabnumber) {
+                this.countries.push(country)
+                for (var filename in c[1][1].files) {
+                  if (!this.files.includes(filename)) {
+                    this.files.push(filename)
+                  }
+                  rowdata.set(filename, c[1][1].files[filename])
                 }
-                rowdata.set(filename, c[1][1].files[filename])
+                this.data.set(country, rowdata)
               }
-              this.data.set(country, rowdata)
             }
           }
         })
@@ -86,7 +177,7 @@ export default {
         this.backdated = 'http://localhost:8002/backdated?date='
       }
     },
-    getFile: function (title, file) {
+    notificationStyle: function (title, file) {
       if (this.data === undefined) {
         return ''
       }
@@ -105,6 +196,16 @@ export default {
         return 'received'
       }
       return ''
+    },
+    formatDate (date) {
+      if (!date) return null
+      const [year, month, day] = date.split('-')
+      return `${month}/${day}/${year}`
+    },
+    parseDate (date) {
+      if (!date) return null
+      const [month, day, year] = date.split('/')
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   }
 }
@@ -120,13 +221,12 @@ export default {
   }
   .statusResponse {
     font-size: 100%;
-    color: white;
   }
-  .dateSelectorBox {
-    background: black;
-    width: 214px;
-    padding: 20px;
-    color: black;
+  .selectorBox {
+    margin: auto;
+    width: 90%;
+    background-color: #4d4d4d;
+    color: white;
   }
   .received {
     margin-left:auto;
@@ -165,7 +265,7 @@ export default {
     background-color: red;
   }
   .zebraStripe {
-    background-color: #201010;
+    background-color: #4d4d4d;
   }
   .fileFontSize {
     font-size: small;

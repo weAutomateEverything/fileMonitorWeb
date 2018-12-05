@@ -1,17 +1,65 @@
 <template>
-  <b-container fluid>
+  <v-app id="inspire" dark>
+    <v-navigation-drawer
+      v-model="drawer"
+      clipped
+      fixed
+      app
+    >
+      <v-list dense>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/">Tab1</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/secondTab">Tab2</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <router-link to="/backdated">Backdated</router-link>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>settings</v-icon>
+          </v-list-tile-action>
+          <router-link to="">Admin Console</router-link>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>F.A.R.M</v-toolbar-title>
+    </v-toolbar>
     <NotificationKey></NotificationKey>
-    <div class="row">
-      <div class="nameCol">&nbsp;</div>
-      <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
-    </div>
-    <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
-      <div class="nameCol fileFontSize">{{ file }}</div>
-      <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
-        <div v-bind:class="notificationStyle(title,file)" ></div>
-      </div>
-    </div>
-  </b-container>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout justify-center align-center>
+          <b-container fluid>
+            <div class="row">
+              <div class="nameCol">&nbsp;</div>
+              <div class="valueCol h5" v-for="title in countries" v-bind:key="title">{{ title }}</div>
+            </div>
+            <div class="row" v-for="(file,index) in files" v-bind:key="file" :class="{'zebraStripe': index % 2 === 0}">
+              <div class="nameCol fileFontSize">{{ file }}</div>
+              <div class="valueCol"  v-for="title in countries" v-bind:key="file+title">
+                <div v-bind:class="notificationStyle(title,file)" ></div>
+              </div>
+            </div>
+          </b-container>
+        </v-layout>
+      </v-container>
+    </v-content>
+    <v-footer app fixed>
+      <span>Card Systems team</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
@@ -24,7 +72,8 @@ export default {
       data: new Map(),
       countries: '',
       files: '',
-      endpoint: ''
+      endpoint: '',
+      drawer: null
     }
   },
   timer: '',
@@ -138,7 +187,7 @@ export default {
     background-color: red;
   }
   .zebraStripe {
-    background-color: #201010;
+    background-color: #4d4d4d;
   }
   .fileFontSize {
     font-size: small;
