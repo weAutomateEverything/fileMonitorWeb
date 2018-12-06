@@ -1,30 +1,34 @@
 <template>
-  <b-navbar id="nav" toggleable="md" type="dark" variant="Info">
+        <v-list id="nav">
+          <v-list-tile>
+            <v-list-tile-action>
+              <div class="received"></div>
+            </v-list-tile-action>
+            <p>Received</p>
+          </v-list-tile>
 
-    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+          <v-list-tile>
+            <v-list-tile-action>
+              <div class="late"></div>
+            </v-list-tile-action>
+            <p>Received Late</p>
+          </v-list-tile>
 
-    <b-collapse is-nav id="nav_collapse">
+          <v-list-tile>
+            <v-list-tile-action>
+              <div class="notReceived"></div>
+            </v-list-tile-action>
+            <p>Not Received</p>
+          </v-list-tile>
 
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-md-auto">
-        <div class="col-sm-2 keys">
-          <div class="received"></div><p>Received</p>
-        </div>
-        <div class="col-sm-2 keys">
-          <div class="late"></div><p>Received Late</p>
-        </div>
-        <div class="col-sm-2 keys">
-          <div class="notReceived"></div><p>Not Received</p>
-        </div>
-        <div class="col-sm-2 keys">
-          <div class="unaccessable"></div><p>Share Inaccessible</p>
-        </div>
-      </b-navbar-nav>
-
-    </b-collapse>
-  </b-navbar>
+          <v-list-tile>
+            <v-list-tile-action>
+              <div class="unaccessable"></div>
+            </v-list-tile-action>
+            <p>Inaccessible</p>
+          </v-list-tile>
+        </v-list>
 </template>
-
 <script>
 export default {
   name: 'notificationKey'
@@ -32,9 +36,6 @@ export default {
 </script>
 
 <style scoped>
-  .keys{
-    padding-top:10px;
-  }
   .received {
     margin-left:auto;
     margin-right:auto;
@@ -72,6 +73,7 @@ export default {
     background-color: red;
   }
   #nav{
-    width: 70%;
+    position: absolute;
+    bottom:2%;
   }
 </style>

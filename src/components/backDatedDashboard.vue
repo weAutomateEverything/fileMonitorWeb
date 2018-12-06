@@ -69,13 +69,13 @@
           <hr>
           <p class="statusResponse" v-bind:key="result">{{result}}</p>
         </div>
+        <NotificationKey></NotificationKey>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>F.A.R.M</v-toolbar-title>
     </v-toolbar>
-    <NotificationKey></NotificationKey>
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>

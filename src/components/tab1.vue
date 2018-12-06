@@ -31,16 +31,16 @@
           </v-list-tile-action>
           <router-link to="">Admin Console</router-link>
         </v-list-tile>
+        <NotificationKey></NotificationKey>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>F.A.R.M</v-toolbar-title>
     </v-toolbar>
-    <NotificationKey></NotificationKey>
     <v-content>
       <v-container fluid fill-height>
-        <v-layout justify-center align-center>
+        <v-layout>
           <b-container fluid>
             <div class="row">
               <div class="nameCol">&nbsp;</div>
